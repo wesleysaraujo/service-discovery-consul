@@ -100,3 +100,19 @@ Para adicionar o novo agente client no cluster automaticamente, basta usar o par
 `
 ### Registrando 2 serviços iguais.
 No segundo client que adicionamos também registramos o nginx como serviço, sendo assim ao consultar o DNS ele deve retornar os 2 apontamentos do Nginx.
+
+### Chave de criptografia
+É possível encriptar as informações para que a comunicação entre os servidores sejam realizadas de forma segura, para isso devemos gerar uma chave através do próprio consul usando o comando `consul keygen` e colar a chave no arquivo de configuração dos servers (server.json), dentro do nó encrypt.
+
+Um ponto muito bacana de se usar criptorgrafia é que o cluster só permite a entrada de novos membros que possuem a mesma chave.
+
+```
+{
+    "server": true,
+    "bind_addr": "172.24.0.2",
+    "bootstrap_expect": 3,
+    "data_dir": "/tmp",
+    "node_name": "consulserver01",
+    "encrypt": "CHAVE_DE_CRIPTOGRAFIA"
+}
+```
